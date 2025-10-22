@@ -16,7 +16,7 @@ uv sync  # 或者根据你自己的需求来安装依赖
 
 接下来通过 `uv run mian.py` 运行文件即可。
 
-或者你可以通过pip或者uv进行安装然后自己进行探索和使用：
+或者你可以通过pip或者uv进行安装然后自己进行探索和使用（目前还未上传至pypi，暂时不可用）：
 ```bash
 pip install city-parse
 
