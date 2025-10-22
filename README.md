@@ -58,4 +58,12 @@ uv add city-parse
 ### Windows & Linux (without NVIDIA GPU)
 不了解，有待测试
 
+## License
+This project is under [MIT LICENSE].
 
+该项目的License基于MIT LICENSE，如有冲突以补充条款为准，以下为补充条款：
+
+- 该项目底层基于各种开源模型本地运行或闭源模型API服务，优先遵循模型提供商的条款，包括但不限于是否被授权商用，是否可以进行二次打包分发等；  
+- 基于该项目进行二次开发或分发的，有权声明与本项目之间的关系并在README或LICENSE中著明，且本项目与再分发版本免责；  
+- 禁止任何个人或公司以任何形式进行营利，所有人有权免费使用该项目；
+- 最终解释权归原作者所有。
