@@ -1,5 +1,5 @@
-from ._parse import parse
+from ._parse import Parse
 
 __all__ = [
-    "parse"
+    "Parse"
 ]

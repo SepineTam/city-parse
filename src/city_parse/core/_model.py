@@ -10,15 +10,26 @@
 from enum import Enum
 from typing import Callable
 
+from .model_func import OllamaFunc, OpenAIFunc
+
 
 class Mirror(Enum):
+    # This two is downloading model from huggingface while running.
     HUGGINGFACE = "huggingface"  # Not support now
     MODELSCOPE = "modelscope"  # Not support now
+
+    # Ollama is running model based on ollama
     OLLAMA = "ollama"
+
+    # OpenAI is running model from remote model with API
+    OPENAI = "openai"
 
 
 class Model:
-    RUNNER_MAPPING: dict = {}
+    RUNNER_MAPPING: dict = {
+        Mirror.OLLAMA: OllamaFunc,
+        Mirror.OPENAI: OpenAIFunc
+    }
 
     def __init__(self,
                  model_id: str,

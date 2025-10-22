@@ -10,5 +10,15 @@
 from ._model import Mirror, Model
 
 
-def parse(text: str,
-          model: Mirror | Model) -> str: ...
+class Parse:
+    def __init__(self,
+                 model_id: str,
+                 mirror: Mirror = Mirror.OLLAMA,
+                 *args, **kwargs) -> str:
+        self.model_id = model_id
+        self.runner = Model(model_id, mirror).runner
+        self.args = args
+        self.kwargs = kwargs
+
+    def parse(self, text: str):
+        return self.runner(self.model_id, *self.args, **self.kwargs).run(text)

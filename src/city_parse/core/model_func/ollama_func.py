@@ -7,28 +7,15 @@
 # @Email  : sepinetam@gmail.com
 # @File   : ollama_func.py
 
+from typing import Any, Dict, List
+
 import ollama
-from typing import List, Dict, Any
 
 from ._base import FuncBase
 
 
 class OllamaFunc(FuncBase):
     """Ollama model function for city name extraction"""
-    SYSTEM_PROMPT = """
-    你是一个专门从文本中提取城市名称的助手。
-    请从给定的文本中识别并提取出最主要的一个城市名称，包括对应的行政级别。只返回一个城市名称，不要添加其他解释。
-    """
-
-    def __init__(self, model_id: str, system_prompt: str = None) -> None:
-        """Initialize Ollama function with model ID
-
-        Args:
-            model_id: The model identifier for Ollama
-        """
-        super().__init__()
-        self.model_id: str = model_id
-        self.system_prompt: str = system_prompt or self.SYSTEM_PROMPT
 
     def run(self, text: str, history: List[Dict[str, Any]] = None) -> str:
         """Run Ollama model to extract city names from text
