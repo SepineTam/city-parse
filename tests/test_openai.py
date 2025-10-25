@@ -165,6 +165,43 @@ def test_openai_api_error():
             openai_func.run("测试标题")
 
 
+def test_openai_history_management():
+    """Test OpenAI function history management"""
+    with patch('city_parse.core.model_func.openai_func.OpenAI') as mock_openai:
+        mock_client = Mock()
+        mock_openai.return_value = mock_client
+
+        mock_response = Mock()
+        mock_response.choices = [Mock()]
+        mock_response.choices[0].message.content = "天气晴朗"
+        mock_client.chat.completions.create.return_value = mock_response
+
+        openai_func = OpenAIFunc(
+            model_id="gpt-3.5-turbo",
+            api_key="test-key"
+        )
+
+        # Test history management
+        assert len(openai_func.get_history()) == 0
+
+        # Add history
+        openai_func.add_history("user", "北京天气怎么样？")
+        openai_func.add_history("assistant", "北京今天晴朗。")
+
+        history = openai_func.get_history()
+        assert len(history) == 2
+
+        # Test with history in run
+        openai_func.run("明天呢？", save_to_history=False)
+
+        # History count should not change when save_to_history=False
+        assert len(openai_func.get_history()) == 2
+
+        # Test clearing history
+        openai_func.clear_history()
+        assert len(openai_func.get_history()) == 0
+
+
 # Integration test placeholder - will work with real API key
 @pytest.mark.integration
 def test_openai_integration():

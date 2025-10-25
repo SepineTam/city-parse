@@ -37,13 +37,13 @@ def test_city_extraction_basic(ollama_func, title, expected_city):
 
 def test_city_extraction_with_history(ollama_func):
     """Test city extraction with conversation history"""
-    history = [
-        {"role": "user", "content": "分析一下南京的经济发展"},
-        {"role": "assistant", "content": "南京市"}
-    ]
+    # Add some history
+    ollama_func.add_history("user", "分析一下南京的经济发展")
+    ollama_func.add_history("assistant", "南京市")
 
     test_title = "武汉市长江大桥保护工程"
-    result = ollama_func.run(test_title, history)
+    # Run with save_to_history=False to not modify the test history
+    result = ollama_func.run(test_title, save_to_history=False)
 
     assert "武汉市" in result, f"Expected '武汉市' in result '{result}'"
 
@@ -70,3 +70,41 @@ def test_city_extraction_multiple_cities(ollama_func):
     # Should extract at least one city
     assert result is not None
     assert len(result.strip()) > 0
+
+
+def test_history_management(ollama_func):
+    """Test conversation history management"""
+    # Initially history should be empty
+    assert len(ollama_func.get_history()) == 0
+
+    # Add some history
+    ollama_func.add_history("user", "北京天气怎么样？")
+    ollama_func.add_history("assistant", "北京今天晴朗，温度适宜。")
+
+    # Check history was added
+    history = ollama_func.get_history()
+    assert len(history) == 2
+    assert history[0]["role"] == "user"
+    assert history[1]["role"] == "assistant"
+
+    # Clear history
+    ollama_func.clear_history()
+    assert len(ollama_func.get_history()) == 0
+
+
+def test_run_with_save_to_history(ollama_func):
+    """Test run method with save_to_history=True"""
+    initial_history_count = len(ollama_func.get_history())
+
+    # Run with save_to_history=True
+    ollama_func.run("上海市天气如何？", save_to_history=True)
+
+    # History should have 2 new entries (user + assistant)
+    new_history_count = len(ollama_func.get_history())
+    assert new_history_count == initial_history_count + 2
+
+    history = ollama_func.get_history()
+    # Last two entries should be user and assistant
+    assert history[-2]["role"] == "user"
+    assert "上海市天气如何？" in history[-2]["content"]
+    assert history[-1]["role"] == "assistant"
