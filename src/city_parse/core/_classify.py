@@ -7,9 +7,9 @@
 # @Email  : sepinetam@gmail.com
 # @File   : _classify.py
 
-from typing import List, Optional, Dict, Any, Union
+from typing import Any, Dict, List, Optional, Union
 
-from ._model import ModelSource, Model, ModelConfig
+from ._model import Model, ModelConfig, ModelSource
 
 
 class Classify:
@@ -21,11 +21,19 @@ class Classify:
     仔细分析文本内容，选择最合适的类别。
     只返回类别名称，不要添加其他解释。
 
-    分类要求：
+    【强制约束】：
+    - 你的输出必须是类别列表中的确切名称
+    - 绝对不能输出类别列表之外的任何内容
+    - 不能创建新的类别或变体
+    - 不能添加解释、说明或其他文字
+    - 如果不确定，强制选择最接近的一个类别
+    - 每次只输出一个类别名称
+
+    【分类要求】：
     - 仔细理解文本内容和语义
     - 选择最匹配的类别
     - 如果文本涉及多个类别，选择最主要的一个
-    - 只返回类别名称，格式要与给定类别完全一致
+    - 确保输出的类别名称与给定的类别列表完全一致，一字不差
     """
 
     def __init__(self,
@@ -204,7 +212,8 @@ class Classify:
             if description:
                 self.category_descriptions[category] = description
             # Rebuild system prompt with new category
-            self.config.system_prompt = self._build_system_prompt()
+            self.system_prompt = self._build_system_prompt()
+            self.config.system_prompt = self.system_prompt
             self.model = Model(self.config)
 
     def create_model(self):
