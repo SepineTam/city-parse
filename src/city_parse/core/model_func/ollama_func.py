@@ -37,7 +37,6 @@ class OllamaFunc(FuncBase):
         self.host = host
         self.kwargs = kwargs
 
-    
     def _chat_completion(self, messages: List[Dict[str, str]]) -> str:
         """
         Perform chat completion using Ollama API.

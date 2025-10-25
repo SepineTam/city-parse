@@ -8,7 +8,7 @@
 # @File   : openai_func.py
 
 import os
-from typing import List, Dict
+from typing import Dict, List
 
 from openai import OpenAI
 
@@ -43,7 +43,6 @@ class OpenAIFunc(FuncBase):
         )
         self.kwargs = kwargs
 
-    
     def _chat_completion(self, messages: List[Dict[str, str]]) -> str:
         """
         Perform chat completion using OpenAI API.

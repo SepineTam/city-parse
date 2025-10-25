@@ -8,7 +8,7 @@
 # @File   : _base.py
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 
 
 class FuncBase(ABC):

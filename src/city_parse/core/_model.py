@@ -7,9 +7,9 @@
 # @Email  : sepinetam@gmail.com
 # @File   : _model.py
 
-from enum import Enum
-from typing import Type, Dict, Any, Optional
 from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Dict, Optional, Type
 
 from .model_func import OllamaFunc, OpenAIFunc
 

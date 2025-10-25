@@ -9,7 +9,7 @@
 
 from typing import Optional
 
-from ._model import ModelSource, Model, ModelConfig
+from ._model import Model, ModelConfig, ModelSource
 
 
 class Parse:
