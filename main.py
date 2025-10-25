@@ -1,5 +1,5 @@
 import pandas as pd
-from city_parse.core import Parse
+from city_parse.core import Parse, ModelSource
 from typing import List, Dict
 
 # 提取raw_data.example.csv文件的ID列
@@ -9,7 +9,8 @@ title_list: List[str] = df['id'].tolist()
 title_city_mapping: Dict[str, str] = {}
 city_list: List[str] = []
 
-parser = Parse(model_id="qwen3:1.7b")
+# 通过调整系统提示词或对话记录，更小的0.6b模型也能胜任工作
+parser = Parse(model_id="qwen3:0.6b", source=ModelSource.OLLAMA)
 
 for title in title_list:
     city_name = parser.parse(title)

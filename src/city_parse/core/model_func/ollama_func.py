@@ -15,42 +15,47 @@ from ._base import FuncBase
 
 
 class OllamaFunc(FuncBase):
-    """Ollama model function for city name extraction"""
+    """Ollama model function wrapper"""
 
-    def run(self, text: str, history: List[Dict[str, Any]] = None) -> str:
-        """Run Ollama model to extract city names from text
+    def __init__(self,
+                 model_id: str,
+                 system_prompt: str = None,
+                 temperature: float = 0.1,
+                 host: str = "http://localhost:11434",
+                 **kwargs) -> None:
+        """
+        Initialize Ollama model function.
 
         Args:
-            text: Input text containing city information (typically titles)
-            history: Conversation history list with 'user' and 'assistant' roles
+            model_id (str): Ollama model identifier
+            system_prompt (str): System prompt for the model
+            temperature (float): Temperature parameter for generation
+            host (str): Ollama server host
+            **kwargs: Additional arguments
+        """
+        super().__init__(model_id, system_prompt, temperature)
+        self.host = host
+        self.kwargs = kwargs
+
+    
+    def _chat_completion(self, messages: List[Dict[str, str]]) -> str:
+        """
+        Perform chat completion using Ollama API.
+
+        Args:
+            messages (List[Dict[str, str]]): List of messages with role and content
 
         Returns:
-            Extracted city names with administrative levels
+            str: Model response
         """
-        if history is None:
-            history = []
-
-        # Construct messages with system prompt and history
-        messages: List[Dict[str, str]] = [
-            {"role": "system", "content": self.system_prompt}
-        ]
-
-        # Add conversation history
-        for msg in history:
-            if isinstance(msg, dict) and 'role' in msg and 'content' in msg:
-                messages.append({
-                    "role": msg["role"],
-                    "content": msg["content"]
-                })
-
-        # Add current user message
-        messages.append({"role": "user", "content": text})
-
         try:
             # Call Ollama API
             response = ollama.chat(
                 model=self.model_id,
-                messages=messages
+                messages=messages,
+                options={
+                    'temperature': self.temperature
+                }
             )
 
             # Extract and return the response content
