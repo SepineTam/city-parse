@@ -44,6 +44,26 @@ class Parse:
             <input>商丘市人民政府办公室关于印发商丘市科技创新跨越发展行动计划的通知</input>
             <output>商丘市</output>
         </example>
+        <example>
+            <input>上海市徐汇区人民政府关于印发徐汇区深化医药卫生体制改革近期重点实施方案的通知</input>
+            <output>上海市</output>
+        </example>
+        <example>
+            <input>内蒙古自治区人力资源和社会保障厅对自治区十三届人大ー次会议第434号建议的答复</input>
+            <output>内蒙古自治区</output>
+        </example>
+        <example>
+            <input>绍兴市上虞区人民政府办公室关于印发绍兴市上虞区卫生健康现代化建设实施方案的通知</input>
+            <output>绍兴市</output>
+        </example>
+        <example>
+            <input>北京市石景山区人民政府关于印发《中关村科技园区石景山园改革提升工作方案》的通知</input>
+            <output>北京市</output>
+        </example>
+        <example>
+            <input>河北省数据和政务服务局对政协河北省第十三届委员会第二次会议第0317号提案的答复</input>
+            <output>河北省</output>
+        </example>
     </examples>
 
     """
